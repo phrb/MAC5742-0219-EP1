@@ -3,3 +3,10 @@
 
 mandelbrot
 measurements/
+
+*.aux
+*.bbl
+*.blg
+*.log
+*.pdf
+*.spl
