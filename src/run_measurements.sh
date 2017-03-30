@@ -4,16 +4,27 @@ set -o xtrace
 
 MEASUREMENTS=10
 ITERATIONS=10
-SIZE=16
+INITIAL_SIZE=16
 
-rm *.log
+SIZE=$INITIAL_SIZE
 
-for ((i=1; i<=$ITERATIONS; i++)); do
-        perf stat -d -d -d -r $MEASUREMENTS ./mandelbrot -2.5 1.5 -2.0 2.0 $SIZE >> full.log 2>&1
-        perf stat -d -d -d -r $MEASUREMENTS ./mandelbrot -0.8 -0.7 0.05 0.15 $SIZE >> seahorse.log 2>&1
-        perf stat -d -d -d -r $MEASUREMENTS ./mandelbrot 0.175 0.375 -0.1 0.1 $SIZE >> elephant.log 2>&1
-        perf stat -d -d -d -r $MEASUREMENTS ./mandelbrot -0.188 -0.012 0.554 0.754 $SIZE >> triple_spiral.log 2>&1
-        SIZE=$(($SIZE * 2))
+NAMES=('mandelbrot_seq' 'mandelbrot_pthreads' 'mandelbrot_omp')
+
+make
+
+for NAME in ${NAMES[@]}; do
+    mkdir $NAME
+
+    for ((i=1; i<=$ITERATIONS; i++)); do
+            perf stat -d -d -d -r $MEASUREMENTS ./$NAME -2.5 1.5 -2.0 2.0 $SIZE >> full.log 2>&1
+            perf stat -d -d -d -r $MEASUREMENTS ./$NAME -0.8 -0.7 0.05 0.15 $SIZE >> seahorse.log 2>&1
+            perf stat -d -d -d -r $MEASUREMENTS ./$NAME 0.175 0.375 -0.1 0.1 $SIZE >> elephant.log 2>&1
+            perf stat -d -d -d -r $MEASUREMENTS ./$NAME -0.188 -0.012 0.554 0.754 $SIZE >> triple_spiral.log 2>&1
+            SIZE=$(($SIZE * 2))
+    done
+
+    SIZE=$INITIAL_SIZE
+
+    mv *.log $NAME
+    rm output.ppm
 done
-
-rm output.ppm

@@ -1,8 +1,6 @@
-FILE=mandelbrot.c
 OUTPUT=mandelbrot
 
 IMAGE=.ppm
-LOGS=.log
 
 CC=gcc
 CC_OPT=
@@ -11,17 +9,17 @@ CC_OMP=-fopenmp
 CC_PTH=-pthread
 
 .PHONY: all
-all:  mandelbrot_omp mandelbrot_pthread mandelbrot_seq
+all: $(OUTPUT)_omp $(OUTPUT)_pthreads $(OUTPUT)_seq
 
-mandelbrot_omp: $(FILE)
-	$(CC) -o $(OUTPUT)_omp $(CC_OPT) $(CC_OMP) $(FILE)
+$(OUTPUT)_omp: $(OUTPUT)_omp.c
+	$(CC) -o $(OUTPUT)_omp $(CC_OPT) $(CC_OMP) $(OUTPUT)_omp.c
 
-mandelbrot_pthread: $(FILE)
-	$(CC) -o $(OUTPUT)_pthread $(CC_OPT) $(CC_PTH) $(FILE)
+$(OUTPUT)_pthreads: $(OUTPUT)_pthreads.c
+	$(CC) -o $(OUTPUT)_pthreads $(CC_OPT) $(CC_PTH) $(OUTPUT)_pthreads.c
 
-mandelbrot_seq: $(FILE)
-	$(CC) -o $(OUTPUT)_seq $(CC_OPT) $(FILE)
+$(OUTPUT)_seq: $(OUTPUT)_seq.c
+	$(CC) -o $(OUTPUT)_seq $(CC_OPT) $(OUTPUT)_seq.c
 
 .PHONY: clean
 clean:
-	rm $(OUTPUT)_* *$(IMAGE) *$(LOGS)
+	rm $(OUTPUT)_omp $(OUTPUT)_pthreads $(OUTPUT)_seq *$(IMAGE)
