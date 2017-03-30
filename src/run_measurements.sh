@@ -13,7 +13,7 @@ NAMES=('mandelbrot_seq' 'mandelbrot_pthreads' 'mandelbrot_omp')
 make
 
 for NAME in ${NAMES[@]}; do
-    mkdir $NAME
+    mkdir $NAME_logs
 
     for ((i=1; i<=$ITERATIONS; i++)); do
             perf stat -d -d -d -r $MEASUREMENTS ./$NAME -2.5 1.5 -2.0 2.0 $SIZE >> full.log 2>&1
