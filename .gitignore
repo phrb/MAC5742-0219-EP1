@@ -1,7 +1,10 @@
 *.swp
 *.ppm
 
-mandelbrot
+mandelbrot_seq
+mandelbrot_pth
+mandelbrot_omp
+
 measurements/
 
 *.aux

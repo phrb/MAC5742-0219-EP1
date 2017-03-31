@@ -18,7 +18,7 @@
 %% $Id: elsarticle-template-1-num.tex 149 2009-10-08 05:01:15Z rishi $
 %% $URL: http://lenova.river-valley.com/svn/elsbst/trunk/elsarticle-template-1-num.tex $
 %%
-\documentclass[preprint,12pt,a4paper]{elsarticle}
+\documentclass[final,12pt,a4paper]{elsarticle}
 
 %% Use the option review to obtain double line spacing
 %% \documentclass[preprint,review,12pt]{elsarticle}
@@ -39,10 +39,54 @@
 %% The amsthm package provides extended theorem environments
 %% \usepackage{amsthm}
 
+\usepackage{booktabs}
+\usepackage{xcolor}
+\usepackage{sourcecodepro}
+\usepackage{url}
+\usepackage{listings}
+\usepackage[utf8]{inputenc}
+\usepackage[brazilian]{babel}
+\usepackage{multirow}
+\usepackage{textcomp}
+\usepackage{caption}
+
+\definecolor{Accent}{HTML}{157FFF}
+
+\lstset{ %
+  backgroundcolor={},
+  basicstyle=\ttfamily\scriptsize,
+  breakatwhitespace=true,
+  breaklines=true,
+  captionpos=n,
+  commentstyle=\color{orange},
+  escapeinside={\%*}{*)},
+  extendedchars=true,
+  frame=n,
+  keywordstyle=\color{Accent},
+  language=C++,
+  rulecolor=\color{black},
+  showspaces=false,
+  showstringspaces=false,
+  xleftmargin=.5cm,
+  xrightmargin=.5cm,
+  showtabs=false,
+  stepnumber=2,
+  stringstyle=\color{gray},
+  tabsize=4,
+  keywords={void, int, float, main,
+  if, else, malloc, NULL,
+  fprintf, stderr, for, make, gcc, o},
+  otherkeywords={\#pragma, \#include, \&, \*, +, -, /, [, ], >, <, \$, \., std\=c11}
+}
+
+\renewcommand*{\UrlFont}{\ttfamily\scriptsize\relax}
+
+\graphicspath{{./img/}}
+
 %% The lineno packages adds line numbers. Start line numbering with
 %% \begin{linenumbers}, end it with \end{linenumbers}. Or switch it on
 %% for the whole article with \linenumbers after \end{frontmatter}.
-\usepackage{lineno}
+%% \usepackage{lineno}
 
 %% natbib.sty is loaded by default. However, natbib options can be
 %% provided with \biboptions{...} command. Following options are
@@ -65,7 +109,35 @@
 
 % \biboptions{}
 
-\journal{Journal Name}
+%% Removing lines when no abstract is given
+\makeatletter
+\renewcommand{\MaketitleBox}{%
+    \resetTitleCounters
+        \def\baselinestretch{1}%
+        \begin{center}
+    \def\baselinestretch{1}%
+        \Large \@title \par
+        \vskip 18pt
+        \normalsize\elsauthors \par
+        \vskip 10pt
+        \footnotesize \itshape \elsaddress \par
+        \end{center}
+    \vskip 12pt
+}
+\makeatother
+
+%% Removing custom footer on fist page
+\makeatletter
+\def\ps@pprintTitle{%
+    \let\@oddhead\@empty
+        \let\@evenhead\@empty
+        \def\@oddfoot{\centerline{\thepage}%
+        }%
+    \let\@evenfoot\@oddfoot
+}%
+\makeatother
+
+\journal{MAC 5742-0219 Introdução à Programação Concorrente, Paralela e Distribuída}
 
 \begin{document}
 
@@ -73,7 +145,7 @@
 
 %% Title, authors and addresses
 
-\title{Unnecessarily Complicated Research Title}
+\title{EP1: Cálculo do Conjunto de Mandelbrot \\ em Paralelo com Pthreads e OpenMP}
 
 %% use the tnoteref command within \title for footnotes;
 %% use the tnotetext command for the associated footnote;
@@ -100,170 +172,258 @@
 %% \address[label1]{<address>}
 %% \address[label2]{<address>}
 
-\author{John Smith}
+\author{Pedro Bruel e Alfredo Goldman}
 
-\address{California, United States}
+\address{MAC 5742-0219 Introdução à Programação Concorrente, Paralela e Distribuída}
 
-\begin{abstract}
+%%\begin{abstract}
 %% Text of abstract
-Suspendisse potenti. Suspendisse quis sem elit, et mattis nisl. Phasellus
-consequat erat eu velit rhoncus non pharetra neque auctor. Phasellus eu lacus
-quam. Ut ipsum dolor, euismod aliquam congue sed, lobortis et orci. Mauris eget
-velit id arcu ultricies auctor in eget dolor. Pellentesque suscipit adipiscing
-sem, imperdiet laoreet dolor elementum ut. Mauris condimentum est sed velit
-lacinia placerat. Vestibulum ante ipsum primis in faucibus orci luctus et
-ultrices posuere cubilia Curae; Nullam diam metus, pharetra vitae euismod sed,
-placerat ultrices eros. Aliquam tincidunt dapibus venenatis. In interdum tellus
-nec justo accumsan aliquam. Nulla sit amet massa augue.
-\end{abstract}
-
-\begin{keyword}
-Science \sep Publication \sep Complicated
+%% Suspendisse potenti. Suspendisse quis sem elit, et mattis nisl. Phasellus
+%% consequat erat eu velit rhoncus non pharetra neque auctor. Phasellus eu lacus
+%% quam. Ut ipsum dolor, euismod aliquam congue sed, lobortis et orci. Mauris eget
+%% velit id arcu ultricies auctor in eget dolor. Pellentesque suscipit adipiscing
+%% sem, imperdiet laoreet dolor elementum ut. Mauris condimentum est sed velit
+%% lacinia placerat. Vestibulum ante ipsum primis in faucibus orci luctus et
+%% ultrices posuere cubilia Curae; Nullam diam metus, pharetra vitae euismod sed,
+%% placerat ultrices eros. Aliquam tincidunt dapibus venenatis. In interdum tellus
+%% nec justo accumsan aliquam. Nulla sit amet massa augue.
+%% \end{abstract}
+%%
+%% \begin{keyword}
+%% Science \sep Publication \sep Complicated
 %% keywords here, in the form: keyword \sep keyword
 
 %% MSC codes here, in the form: \MSC code \sep code
 %% or \MSC[2008] code \sep code (2000 is the default)
 
-\end{keyword}
+%% \end{keyword}
 
 \end{frontmatter}
 
 %%
 %% Start line numbering here if you want
 %%
-\linenumbers
+%% \linenumbers
 
 %% main text
-\section{The First Section}
-\label{S:1}
+\section{Introdução}
 
-Maecenas fermentum urna ac sapien
-tincidunt lobortis. Nunc feugiat faucibus varius. Ut sed purus nunc. Ut eget
-eros quis lectus mollis pharetra ut in tellus. Pellentesque ultricies velit sed
-orci pharetra et fermentum lacus imperdiet. Class aptent taciti sociosqu ad
-litora torquent per conubia nostra, per inceptos himenaeos. Suspendisse commodo
-ultrices mauris, condimentum hendrerit lorem condimentum et. Pellentesque urna
-augue, semper et rutrum ac, consequat id quam. Proin lacinia aliquet justo, ut
-suscipit massa commodo sit amet. Proin vehicula nibh nec mauris tempor
-interdum. Donec orci ante, tempor a viverra vel, volutpat sed orci.
+Você já ouviu falar do Conjunto de
+Mandelbrot\footnote{\url{https://en.wikipedia.org/wiki/Mandelbrot_set}
+[Acessado em 30/03/2017]}?  Seu descobridor foi Benoit Mandelbrot, que
+trabalhava na IBM durante a década de 1960 e foi um dos primeiros a usar
+computação gráfica para mostrar como complexidade pode surgir a partir de
+regras simples. Benoit fez isso gerando e visualizando imagens de geometria
+fractal.
 
-Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac
-turpis egestas. Pellentesque quis interdum velit. Nulla tincidunt sem quis nisi
-molestie nec hendrerit nulla interdum. Nunc at lectus at neque dapibus dapibus
-sit amet in massa. Nam ut nisl in diam consectetur dignissim. Sed lacinia diam
-id nunc suscipit vitae semper lorem semper. In vehicula velit at tortor
-fringilla elementum aliquam erat blandit. Donec pretium libero et neque
-vehicula blandit. Curabitur consequat interdum sem at ultrices. Sed at
-tincidunt metus. Etiam vulputate, lacus eget fermentum posuere, ante mi
-dignissim augue, et ultrices felis tortor sed nisl.
+Um desses fractais foi nomeada \textit{Conjunto de Mandelbrot} pelo matemático
+Adrien Douady.  O Conjunto de Mandelbrot pode ser informalmente definido como o
+conjunto dos números complexos $c$ para os quais a função $f_c(z) = z^2 + x$
+não diverge quando é iterada começando em $z = 0$. Isto é, a sequência $f_c(0),
+f_c(f_c(0)), f_c(f_c(f_c(0))),\dots$ é sempre limitada. A Figura
+\ref{fig:header} mostra uma região do Conjunto de Mandelbrot conhecida
+como \textit{Seahorse Valley}.
+
+\begin{figure}[htpb]
+    \centering
+    \includegraphics[width=.82\textwidth]{seahorse}
+    \caption{Seahorse Valley}
+    \label{fig:header}
+\end{figure}
+
+As cores na Figura \ref{fig:header} indicam o número da iteração onde a
+função $f_c(z)$ convergiu. A Figura \ref{fig:header} foi gerada usando o
+código fonte fornecido junto com este documento. O código na linguagem
+\texttt{C} e os arquivos em \LaTeX{} necessários para gerar este documento
+estão disponíveis no
+\textit{GitHub}\footnote{\url{https://github.com/phrb/MAC5742-0219-EP1}
+[Acessado em 30/03/2017]}. O resto deste documento descreve as tarefas que você
+e seu grupo deverão realizar no EP1.
+
+\section{Tarefas}
+
+Você e seu grupo deverão paralelizar o código para o cálculo do Conjunto de
+Mandelbrot usando a biblioteca Pthreads e as diretivas de compilador fornecidas
+pelo OpenMP. Depois, vocês deverão medir o tempo de execução das versões
+sequencial, paralelizada com Pthreads e paralelizada com OpenMP. Vocês deverão
+medir o tempo de execução para diferentes tamanhos de entrada e números de
+\textit{threads} nas versões paralelizadas, em quatro regiões do Conjunto
+de Mandelbrot.
+
+A implementação necessária para paralelizar o código fornecido usando Pthreads
+e OpenMP é relativamente simples. A parte mais trabalhosa do EP1 é a elaboração
+de um relatório, seguindo o padrão deste documento, que apresente e discuta de
+forma científica os resultados que vocês obtiverem com as paralelizações.
+
+\subsection{Paralelização com Pthreads e OpenMP}
+
+O código fornecido está triplicado, e cada arquivo \texttt{.c}
+tem um propósito diferente:
 
 \begin{itemize}
-\item Bullet point one
-\item Bullet point two
+    \item \texttt{mandelbrot\_seq.c}: não precisa ser paralelizado
+    \item \texttt{mandelbrot\_omp.c}: deve ser paralelizado com OpenMP
+    \item \texttt{mandelbrot\_pth.c}: deve ser paralelizado com Pthreads
 \end{itemize}
 
-\begin{enumerate}
-\item Numbered list item one
-\item Numbered list item two
-\end{enumerate}
+Vocês podem modificar à vontade os arquivos \texttt{mandelbrot\_omp.c} e
+\texttt{mandelbrot\_pth.c}, desde que eles continuem produzindo a mesma saída
+produzida por \texttt{mandelbrot\_seq.c}.
 
-\subsection{Subsection One}
+\subsection{Experimentos}
 
-Quisque elit ipsum, porttitor et imperdiet in, facilisis ac diam. Nunc
-facilisis interdum felis eget tincidunt. In condimentum fermentum leo, non
-consequat leo imperdiet pharetra. Fusce ac massa ipsum, vel convallis diam.
-Quisque eget turpis felis. Curabitur posuere, risus eu placerat porttitor,
-magna metus mollis ipsum, eu volutpat nisl erat ac justo. Nullam semper, mi at
-iaculis viverra, nunc velit iaculis nunc, eu tempor ligula eros in nulla.
-Aenean dapibus eleifend convallis. Cras ut libero tellus. Integer mollis eros
-eget risus malesuada fringilla mattis leo facilisis. Etiam interdum turpis eget
-odio ultricies sed convallis magna accumsan. Morbi in leo a mauris sollicitudin
-molestie at non nisl.
+Para cada uma das três versões do programa, vocês deverão realizar medições do
+tempo de execução para diferentes tamanhos de entrada. Nas versões
+paralelizadas vocês deverão também medir, para cada tamanho de entrada, o tempo
+de execução para diferentes números de \textit{threads}. Preferencialmente
+os experimentos deverão ser realizados na Google Compute Engine (GCE),
+usando os US\$300 que serviço fornece por um ano. O tipo de instância
+que vocês devem usar é o \texttt{n1-standard-8}, que tem 8 \textit{cores}
+e 30 GB de memória.
 
-\begin{table}[h]
-\centering
-\begin{tabular}{l l l}
-\hline
-\textbf{Treatments} & \textbf{Response 1} & \textbf{Response 2}\\
-\hline
-Treatment 1 & 0.0003262 & 0.562 \\
-Treatment 2 & 0.0015681 & 0.910 \\
-Treatment 3 & 0.0009271 & 0.296 \\
-\hline
-\end{tabular}
-\caption{Table caption}
+Vocês devem fazer um número de medições e analisar a variação dos valores
+obtidos.  Sugerimos $10$ medições para cada experimento, e também que vocês
+usem a média e o desvio padrão das $10$ medições nos seus gráficos. Vocês podem
+fazer mais medições, desde que apresentem a média e o desvio padrão.
+\textbf{Não é recomendado} fazer menos de $10$ medições.
+
+Vocês devem analisar também o impacto das porções não paralelizáveis do
+código sequencial: as operações de I/O e alocação de memória. As versões
+paralelizadas \textbf{não precisam} realizar I/O e alocação de memória.
+
+A Tabela \ref{tab:exp} lista os experimentos que devem ser feitos: os valores
+para o número de \textit{threads} e de execuções, e os tamanhos de entrada.
+Cada experimento deverá ser repetido nas quatro
+regiões\footnote{\url{http://www.nahee.com/Derbyshire/manguide.html} [Acessado
+em 30/03/2017]} especificadas na Figura~\ref{fig:regions}. As coordenadas para
+cada região podem ser obtidas executando no diretório \texttt{src}:
+
+\begin{lstlisting}
+$ make mandelbrot_seq
+gcc -o mandelbrot_seq -std=c11 mandelbrot_seq.c
+$ ./mandelbrot_seq
+usage: ./mandelbrot_seq c_x_min c_x_max c_y_min c_y_max image_size
+examples with image_size = 11500:
+    Full Picture:         ./mandelbrot_seq -2.5 1.5 -2.0 2.0 11500
+    Seahorse Valley:      ./mandelbrot_seq -0.8 -0.7 0.05 0.15 11500
+    Elephant Valley:      ./mandelbrot_seq 0.175 0.375 -0.1 0.1 11500
+    Triple Spiral Valley: ./mandelbrot_seq -0.188 -0.012 0.554 0.754 11500
+\end{lstlisting}
+
+O número de iterações para o critério de convergência foi
+escolhido\footnote{\url{https://goo.gl/WpL9hS} [Acessado em 30/03/2017]} de
+forma a produzir uma imagem interessante em diferentes níveis de magnificação,
+mas ter um tempo de execução razoável para tamanhos grandes de entrada.
+
+\begin{figure}[htpb]
+    \captionsetup{width=.4\linewidth}
+    \centering
+    \begin{minipage}{.48\textwidth}
+    \centering
+        \includegraphics[width=.95\textwidth]{elephant}
+    \caption{\textit{Elephant Valley}}
+    \label{fig:regions}
+    \end{minipage}%
+    \begin{minipage}{.48\textwidth}
+    \centering
+        \includegraphics[width=.95\textwidth]{seahorse}
+    \caption{\textit{Seahorse Valley}}
+    \label{fig:regions}
+    \end{minipage}
+
+    \begin{minipage}{.48\textwidth}
+    \centering
+        \includegraphics[width=.95\textwidth]{triple_spiral}
+    \caption{\textit{Triple Spiral Valley}}
+    \label{fig:regions}
+    \end{minipage}%
+    \begin{minipage}{.48\textwidth}
+    \centering
+        \includegraphics[width=.95\textwidth]{full}
+    \caption{\textit{Full Picture}}
+    \label{fig:regions}
+    \end{minipage}
+
+    \captionsetup{width=\linewidth}
+    \caption{Regiões do Conjunto de Mandelbrot}
+    \label{fig:regions}
+\end{figure}
+
+\begin{table}[htpb]
+    \centering
+    \begin{tabular}{@{}lccc@{}}
+        \toprule
+        & Pthreads & OpenMP  & Sequencial \\ \midrule
+        \addlinespace[0.8em]
+        Regiões & \multicolumn{3}{c}{\textit{Triple Spiral}, \textit{Elephant}, \textit{Seahorse} \& \textit{Full}} \\
+        \addlinespace[0.8em]
+        I/O e Aloc. Mem. & \multicolumn{2}{c}{Sem} & Com e sem \\
+        \addlinespace[0.8em]
+        \textnumero de \textit{Threads} & \multicolumn{2}{c}{$2^0 \dots 2^5$} & -  \\
+        \addlinespace[0.8em]
+        Tamanho da Entrada & \multicolumn{3}{c}{$2^4 \dots 2^{13}$}\\
+        \addlinespace[0.8em]
+        \textnumero de Execuções & \multicolumn{3}{c}{$10$} \\ \midrule
+        \end{tabular}
+    \caption{Experimentos}
+    \label{tab:exp}
 \end{table}
 
-\subsection{Subsection Two}
+\subsection{Apresentação dos Resultados}
 
-Donec eget ligula venenatis est posuere eleifend in sit amet diam. Vestibulum
-sollicitudin mauris ac augue blandit ultricies. Nulla facilisi. Etiam ut turpis
-nunc. Praesent leo orci, tincidunt vitae feugiat eu, feugiat a massa. Duis
-mauris ipsum, tempor vel condimentum nec, suscipit non mi. Fusce quis urna
-dictum felis posuere sagittis ac sit amet erat. In in ultrices lectus. Nulla
-vitae ipsum lectus, a gravida erat. Etiam quam nisl, blandit ut porta in,
-accumsan a nibh. Phasellus sodales euismod dolor sit amet elementum. Phasellus
-varius placerat erat, nec gravida libero pellentesque id. Fusce nisi ante,
-euismod nec cursus at, suscipit a enim. Nulla facilisi.
+Depois de realizar os experimentos vocês deverão elaborar gráficos que
+evidenciem o comportamento das três versões do programa com relação à variação
+dos parâmetros descritos na Tabela \ref{tab:exp}. Os gráficos deverão ser
+claros e legíveis, com eixos nomeados. Deverão apresentar a média e o desvio
+padrão das $10$ execuções para cada cenário experimental.
 
-%\begin{figure}[h]
-%\centering\includegraphics[width=0.4\linewidth]{placeholder}
-%\caption{Figure caption}
-%\end{figure}
+Recomendamos que vocês usem ferramentas como a biblioteca \texttt{matplotlib}
+da linguagem \texttt{Python}. Se fizerem isso vocês conseguirão automatizar a
+realização dos experimentos e a geração dos gráficos. A automatização dos
+experimentos e da visualização dos dados gerados é fundamental para pesquisa em
+Ciência da Computação, pois permite gerar e analisar grandes conjuntos de dados
+sem muito esforço manual.
 
-Integer risus dui, condimentum et gravida vitae, adipiscing et enim. Aliquam
-erat volutpat. Pellentesque diam sapien, egestas eget gravida ut, tempor eu
-nulla. Vestibulum mollis pretium lacus eget venenatis. Fusce gravida nisl quis
-est molestie eu luctus ipsum pretium. Maecenas non eros lorem, vel adipiscing
-odio. Etiam dolor risus, mattis in pellentesque id, pellentesque eu nibh.
-Mauris nec ante at orci ultricies placerat ac non massa. Aenean imperdiet, ante
-eu sollicitudin vestibulum, dolor felis dapibus arcu, sit amet fermentum urna
-nibh sit amet mauris. Suspendisse adipiscing mollis dolor quis lobortis.
+\subsection{Discussão dos Resultados}
 
-\begin{equation}
-\label{eq:emc}
-e = mc^2
-\end{equation}
+Vocês deverão analisar os resultados obtidos e tentar responder a algumas
+perguntas:
 
-\section{The Second Section}
-\label{S:2}
+\begin{itemize}
+    \item Por que você acha que fizemos a recomendação de se realizar
+    mais de uma medição?
+    \item Por que você acha que existe variabilidade entre execuções do mesmo
+    programa?
+    \item Como e por que as três versões do programa se comportam com a variação:
+        \begin{itemize}
+            \item Do tamanho da entrada?
+            \item Das regiões do Conjunto de Mandelbrot?
+            \item Do número de \textit{threads}?
+        \end{itemize}
+    \item Qual o impacto das operações de I/O e alocação de memória no tempo de
+    execução?
+\end{itemize}
 
-Reference to Section \ref{S:1}. Etiam congue sollicitudin diam non porttitor.
-Etiam turpis nulla, auctor a pretium non, luctus quis ipsum. Fusce pretium
-gravida libero non accumsan. Donec eget augue ut nulla placerat hendrerit ac ut
-mi. Phasellus euismod ornare mollis. Proin tempus fringilla ultricies. Donec
-pretium feugiat libero quis convallis. Nam interdum ante sed magna congue eu
-semper tellus sagittis. Curabitur eu augue elit.
+Vocês conseguem pensar em mais perguntas interessantes?
 
-Aenean eleifend purus et massa consequat facilisis. Etiam volutpat placerat
-dignissim. Ut nec nibh nulla. Aliquam erat volutpat. Nam at massa velit, eu
-malesuada augue. Maecenas sit amet nunc mauris. Maecenas eu ligula quis turpis
-molestie elementum nec at est. Sed adipiscing neque ac sapien viverra sit amet
-vestibulum arcu rhoncus.
+\subsection{Entrega no PACA}
 
-Vivamus pharetra nibh in orci euismod congue. Pellentesque habitant morbi
-tristique senectus et netus et malesuada fames ac turpis egestas. Quisque lacus
-diam, congue vel laoreet id, iaculis eu sapien. In id risus ac leo pellentesque
-pellentesque et in dui. Etiam tincidunt quam ut ante vestibulum ultricies. Nam
-at rutrum lectus. Aenean non justo tortor, nec mattis justo. Aliquam erat
-volutpat. Nullam ac viverra augue. In tempus venenatis nibh quis semper.
-Maecenas ac nisl eu ligula dictum lobortis. Sed lacus ante, tempor eu dictum
-eu, accumsan in velit. Integer accumsan convallis porttitor. Maecenas pretium
-tincidunt metus sit amet gravida. Maecenas pretium blandit felis, ac interdum
-ante semper sed.
+Vocês deverão entregar no PACA \textbf{apenas um relatório e código fonte por
+grupo}. A entrega deve ser um único arquivo nos formatos \texttt{.tar},
+\texttt{.zip}, ou qualquer formato que o \texttt{tar} consiga descompactar.
+A entrega deve ser feita \textbf{até dia xx/xx}.
 
-In auctor ultrices elit, vel feugiat ligula aliquam sed. Curabitur aliquam elit
-sed dui rhoncus consectetur. Cras elit ipsum, lobortis a tempor at, viverra
-vitae mi. Cras sed urna sed eros bibendum faucibus. Morbi vel leo orci, vel
-faucibus orci. Vivamus urna nisl, sodales vitae posuere in, tempus vel tellus.
-Donec magna est, luctus non commodo sit amet, placerat et enim.
+\section{Tecnologias}
 
-%% The Appendices part is started with the command \appendix;
-%% appendix sections are then done as normal sections
-%% \appendix
+\subsection{Google Compute Engine (GCE)}
 
-%% \section{}
-%% \label{}
+\subsection{Shell scripting \& GNU \texttt{screen}}
+
+\subsection{Linux \texttt{perf}}
+
+\subsection{\LaTeX}
+
+\section{Conclusão}
 
 %% References
 %%
