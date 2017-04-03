@@ -1,0 +1,280 @@
+
+ Performance counter stats for './mandelbrot_omp -2.5 1.5 -2.0 2.0 16' (10 runs):
+
+          0.529135      task-clock (msec)         #    0.642 CPUs utilized            ( +-  2.71% )
+                 0      context-switches          #    0.000 K/sec                  
+                 0      cpu-migrations            #    0.000 K/sec                  
+                63      page-faults               #    0.119 M/sec                    ( +-  0.39% )
+   <not supported>      cycles                   
+   <not supported>      stalled-cycles-frontend  
+   <not supported>      stalled-cycles-backend   
+   <not supported>      instructions             
+   <not supported>      branches                 
+   <not supported>      branch-misses            
+   <not supported>      L1-dcache-loads          
+   <not supported>      L1-dcache-load-misses    
+   <not supported>      LLC-loads                
+   <not supported>      LLC-load-misses          
+   <not supported>      L1-icache-loads          
+   <not supported>      L1-icache-load-misses    
+   <not supported>      dTLB-loads               
+   <not supported>      dTLB-load-misses         
+   <not supported>      iTLB-loads               
+   <not supported>      iTLB-load-misses         
+   <not supported>      L1-dcache-prefetches     
+   <not supported>      L1-dcache-prefetch-misses
+
+       0.000824222 seconds time elapsed                                          ( +-  2.31% )
+
+
+ Performance counter stats for './mandelbrot_omp -2.5 1.5 -2.0 2.0 32' (10 runs):
+
+          0.747040      task-clock (msec)         #    0.716 CPUs utilized            ( +-  1.95% )
+                 0      context-switches          #    0.000 K/sec                  
+                 0      cpu-migrations            #    0.000 K/sec                  
+                70      page-faults               #    0.094 M/sec                    ( +-  0.28% )
+   <not supported>      cycles                   
+   <not supported>      stalled-cycles-frontend  
+   <not supported>      stalled-cycles-backend   
+   <not supported>      instructions             
+   <not supported>      branches                 
+   <not supported>      branch-misses            
+   <not supported>      L1-dcache-loads          
+   <not supported>      L1-dcache-load-misses    
+   <not supported>      LLC-loads                
+   <not supported>      LLC-load-misses          
+   <not supported>      L1-icache-loads          
+   <not supported>      L1-icache-load-misses    
+   <not supported>      dTLB-loads               
+   <not supported>      dTLB-load-misses         
+   <not supported>      iTLB-loads               
+   <not supported>      iTLB-load-misses         
+   <not supported>      L1-dcache-prefetches     
+   <not supported>      L1-dcache-prefetch-misses
+
+       0.001042736 seconds time elapsed                                          ( +-  1.50% )
+
+
+ Performance counter stats for './mandelbrot_omp -2.5 1.5 -2.0 2.0 64' (10 runs):
+
+          1.599590      task-clock (msec)         #    0.786 CPUs utilized            ( +-  0.63% )
+                 0      context-switches          #    0.063 K/sec                    ( +-100.00% )
+                 0      cpu-migrations            #    0.000 K/sec                  
+               100      page-faults               #    0.063 M/sec                    ( +-  0.22% )
+   <not supported>      cycles                   
+   <not supported>      stalled-cycles-frontend  
+   <not supported>      stalled-cycles-backend   
+   <not supported>      instructions             
+   <not supported>      branches                 
+   <not supported>      branch-misses            
+   <not supported>      L1-dcache-loads          
+   <not supported>      L1-dcache-load-misses    
+   <not supported>      LLC-loads                
+   <not supported>      LLC-load-misses          
+   <not supported>      L1-icache-loads          
+   <not supported>      L1-icache-load-misses    
+   <not supported>      dTLB-loads               
+   <not supported>      dTLB-load-misses         
+   <not supported>      iTLB-loads               
+   <not supported>      iTLB-load-misses         
+   <not supported>      L1-dcache-prefetches     
+   <not supported>      L1-dcache-prefetch-misses
+
+       0.002035810 seconds time elapsed                                          ( +-  5.58% )
+
+
+ Performance counter stats for './mandelbrot_omp -2.5 1.5 -2.0 2.0 128' (10 runs):
+
+          5.115351      task-clock (msec)         #    0.936 CPUs utilized            ( +-  0.39% )
+                 0      context-switches          #    0.020 K/sec                    ( +-100.00% )
+                 0      cpu-migrations            #    0.000 K/sec                  
+               220      page-faults               #    0.043 M/sec                    ( +-  0.12% )
+   <not supported>      cycles                   
+   <not supported>      stalled-cycles-frontend  
+   <not supported>      stalled-cycles-backend   
+   <not supported>      instructions             
+   <not supported>      branches                 
+   <not supported>      branch-misses            
+   <not supported>      L1-dcache-loads          
+   <not supported>      L1-dcache-load-misses    
+   <not supported>      LLC-loads                
+   <not supported>      LLC-load-misses          
+   <not supported>      L1-icache-loads          
+   <not supported>      L1-icache-load-misses    
+   <not supported>      dTLB-loads               
+   <not supported>      dTLB-load-misses         
+   <not supported>      iTLB-loads               
+   <not supported>      iTLB-load-misses         
+   <not supported>      L1-dcache-prefetches     
+   <not supported>      L1-dcache-prefetch-misses
+
+       0.005463236 seconds time elapsed                                          ( +-  0.32% )
+
+
+ Performance counter stats for './mandelbrot_omp -2.5 1.5 -2.0 2.0 256' (10 runs):
+
+         18.999703      task-clock (msec)         #    0.978 CPUs utilized            ( +-  0.35% )
+                 0      context-switches          #    0.011 K/sec                    ( +- 66.67% )
+                 0      cpu-migrations            #    0.000 K/sec                  
+               701      page-faults               #    0.037 M/sec                    ( +-  0.02% )
+   <not supported>      cycles                   
+   <not supported>      stalled-cycles-frontend  
+   <not supported>      stalled-cycles-backend   
+   <not supported>      instructions             
+   <not supported>      branches                 
+   <not supported>      branch-misses            
+   <not supported>      L1-dcache-loads          
+   <not supported>      L1-dcache-load-misses    
+   <not supported>      LLC-loads                
+   <not supported>      LLC-load-misses          
+   <not supported>      L1-icache-loads          
+   <not supported>      L1-icache-load-misses    
+   <not supported>      dTLB-loads               
+   <not supported>      dTLB-load-misses         
+   <not supported>      iTLB-loads               
+   <not supported>      iTLB-load-misses         
+   <not supported>      L1-dcache-prefetches     
+   <not supported>      L1-dcache-prefetch-misses
+
+       0.019433704 seconds time elapsed                                          ( +-  0.36% )
+
+
+ Performance counter stats for './mandelbrot_omp -2.5 1.5 -2.0 2.0 512' (10 runs):
+
+         75.213044      task-clock (msec)         #    0.995 CPUs utilized            ( +-  0.54% )
+                 0      context-switches          #    0.001 K/sec                    ( +-100.00% )
+                 0      cpu-migrations            #    0.000 K/sec                  
+             2,622      page-faults               #    0.035 M/sec                    ( +-  0.01% )
+   <not supported>      cycles                   
+   <not supported>      stalled-cycles-frontend  
+   <not supported>      stalled-cycles-backend   
+   <not supported>      instructions             
+   <not supported>      branches                 
+   <not supported>      branch-misses            
+   <not supported>      L1-dcache-loads          
+   <not supported>      L1-dcache-load-misses    
+   <not supported>      LLC-loads                
+   <not supported>      LLC-load-misses          
+   <not supported>      L1-icache-loads          
+   <not supported>      L1-icache-load-misses    
+   <not supported>      dTLB-loads               
+   <not supported>      dTLB-load-misses         
+   <not supported>      iTLB-loads               
+   <not supported>      iTLB-load-misses         
+   <not supported>      L1-dcache-prefetches     
+   <not supported>      L1-dcache-prefetch-misses
+
+       0.075626382 seconds time elapsed                                          ( +-  0.54% )
+
+
+ Performance counter stats for './mandelbrot_omp -2.5 1.5 -2.0 2.0 1024' (10 runs):
+
+        299.560385      task-clock (msec)         #    0.999 CPUs utilized            ( +-  0.33% )
+                 0      context-switches          #    0.001 K/sec                    ( +- 55.28% )
+                 0      cpu-migrations            #    0.000 K/sec                  
+            10,302      page-faults               #    0.034 M/sec                    ( +-  0.00% )
+   <not supported>      cycles                   
+   <not supported>      stalled-cycles-frontend  
+   <not supported>      stalled-cycles-backend   
+   <not supported>      instructions             
+   <not supported>      branches                 
+   <not supported>      branch-misses            
+   <not supported>      L1-dcache-loads          
+   <not supported>      L1-dcache-load-misses    
+   <not supported>      LLC-loads                
+   <not supported>      LLC-load-misses          
+   <not supported>      L1-icache-loads          
+   <not supported>      L1-icache-load-misses    
+   <not supported>      dTLB-loads               
+   <not supported>      dTLB-load-misses         
+   <not supported>      iTLB-loads               
+   <not supported>      iTLB-load-misses         
+   <not supported>      L1-dcache-prefetches     
+   <not supported>      L1-dcache-prefetch-misses
+
+       0.300000749 seconds time elapsed                                          ( +-  0.33% )
+
+
+ Performance counter stats for './mandelbrot_omp -2.5 1.5 -2.0 2.0 2048' (10 runs):
+
+       1199.344904      task-clock (msec)         #    1.000 CPUs utilized            ( +-  1.00% )
+                 2      context-switches          #    0.002 K/sec                    ( +- 14.97% )
+                 0      cpu-migrations            #    0.000 K/sec                  
+            41,021      page-faults               #    0.034 M/sec                    ( +-  0.00% )
+   <not supported>      cycles                   
+   <not supported>      stalled-cycles-frontend  
+   <not supported>      stalled-cycles-backend   
+   <not supported>      instructions             
+   <not supported>      branches                 
+   <not supported>      branch-misses            
+   <not supported>      L1-dcache-loads          
+   <not supported>      L1-dcache-load-misses    
+   <not supported>      LLC-loads                
+   <not supported>      LLC-load-misses          
+   <not supported>      L1-icache-loads          
+   <not supported>      L1-icache-load-misses    
+   <not supported>      dTLB-loads               
+   <not supported>      dTLB-load-misses         
+   <not supported>      iTLB-loads               
+   <not supported>      iTLB-load-misses         
+   <not supported>      L1-dcache-prefetches     
+   <not supported>      L1-dcache-prefetch-misses
+
+       1.199795915 seconds time elapsed                                          ( +-  1.00% )
+
+
+ Performance counter stats for './mandelbrot_omp -2.5 1.5 -2.0 2.0 4096' (10 runs):
+
+       4773.821883      task-clock (msec)         #    0.995 CPUs utilized            ( +-  0.30% )
+                11      context-switches          #    0.002 K/sec                    ( +-  3.26% )
+                 0      cpu-migrations            #    0.000 K/sec                    ( +- 50.92% )
+           163,901      page-faults               #    0.034 M/sec                    ( +-  0.00% )
+   <not supported>      cycles                   
+   <not supported>      stalled-cycles-frontend  
+   <not supported>      stalled-cycles-backend   
+   <not supported>      instructions             
+   <not supported>      branches                 
+   <not supported>      branch-misses            
+   <not supported>      L1-dcache-loads          
+   <not supported>      L1-dcache-load-misses    
+   <not supported>      LLC-loads                
+   <not supported>      LLC-load-misses          
+   <not supported>      L1-icache-loads          
+   <not supported>      L1-icache-load-misses    
+   <not supported>      dTLB-loads               
+   <not supported>      dTLB-load-misses         
+   <not supported>      iTLB-loads               
+   <not supported>      iTLB-load-misses         
+   <not supported>      L1-dcache-prefetches     
+   <not supported>      L1-dcache-prefetch-misses
+
+       4.799938479 seconds time elapsed                                          ( +-  0.30% )
+
+
+ Performance counter stats for './mandelbrot_omp -2.5 1.5 -2.0 2.0 8192' (10 runs):
+
+      19236.452155      task-clock (msec)         #    0.943 CPUs utilized            ( +-  0.72% )
+                59      context-switches          #    0.003 K/sec                    ( +-  3.56% )
+                 0      cpu-migrations            #    0.000 K/sec                    ( +- 44.72% )
+           655,421      page-faults               #    0.034 M/sec                    ( +-  0.00% )
+   <not supported>      cycles                   
+   <not supported>      stalled-cycles-frontend  
+   <not supported>      stalled-cycles-backend   
+   <not supported>      instructions             
+   <not supported>      branches                 
+   <not supported>      branch-misses            
+   <not supported>      L1-dcache-loads          
+   <not supported>      L1-dcache-load-misses    
+   <not supported>      LLC-loads                
+   <not supported>      LLC-load-misses          
+   <not supported>      L1-icache-loads          
+   <not supported>      L1-icache-load-misses    
+   <not supported>      dTLB-loads               
+   <not supported>      dTLB-load-misses         
+   <not supported>      iTLB-loads               
+   <not supported>      iTLB-load-misses         
+   <not supported>      L1-dcache-prefetches     
+   <not supported>      L1-dcache-prefetch-misses
+
+      20.391661830 seconds time elapsed                                          ( +-  0.68% )
+
