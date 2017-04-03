@@ -52,7 +52,7 @@
 
 \definecolor{Accent}{HTML}{157FFF}
 
-\lstset{ %
+\lstdefinestyle{customMtheme}{%
   backgroundcolor={},
   basicstyle=\ttfamily\scriptsize,
   breakatwhitespace=true,
@@ -75,9 +75,10 @@
   tabsize=4,
   keywords={void, int, float, main,
   if, else, malloc, NULL,
-  fprintf, stderr, for, make, gcc, o},
+  fprintf, stderr, for, make, gcc, o, Enter, Ctrl},
   otherkeywords={\#pragma, \#include, \&, \*, +, -, /, [, ], >, <, \$, \., std\=c11}
 }
+\lstset{basicstyle=\ttfamily\scriptsize,style=customMtheme}
 
 \renewcommand*{\UrlFont}{\ttfamily\scriptsize\relax}
 
@@ -216,7 +217,7 @@ computação gráfica para mostrar como complexidade pode surgir a partir de
 regras simples. Benoit fez isso gerando e visualizando imagens de geometria
 fractal.
 
-Um desses fractais foi nomeada \textit{Conjunto de Mandelbrot} pelo matemático
+Um desses fractais foi nomeado \textit{Conjunto de Mandelbrot} pelo matemático
 Adrien Douady.  O Conjunto de Mandelbrot pode ser informalmente definido como o
 conjunto dos números complexos $c$ para os quais a função $f_c(z) = z^2 + x$
 não diverge quando é iterada começando em $z = 0$. Isto é, a sequência $f_c(0),
@@ -275,11 +276,11 @@ produzida por \texttt{mandelbrot\_seq.c}.
 Para cada uma das três versões do programa, vocês deverão realizar medições do
 tempo de execução para diferentes tamanhos de entrada. Nas versões
 paralelizadas vocês deverão também medir, para cada tamanho de entrada, o tempo
-de execução para diferentes números de \textit{threads}. Preferencialmente
-os experimentos deverão ser realizados na Google Compute Engine (GCE),
-usando os US\$300 que serviço fornece por um ano. O tipo de instância
-que vocês devem usar é o \texttt{n1-standard-8}, que tem 8 \textit{cores}
-e 30 GB de memória.
+de execução para diferentes números de \textit{threads}. Preferencialmente os
+experimentos deverão ser realizados na Google Compute Engine (GCE), usando os
+US\$300 ``de brinde'' que o serviço fornece por um ano. O tipo de instância que
+vocês devem usar é o \texttt{n1-standard-8}, que tem 8 \textit{cores} e 30 GB
+de memória.
 
 Vocês devem fazer um número de medições e analisar a variação dos valores
 obtidos.  Sugerimos $10$ medições para cada experimento, e também que vocês
@@ -359,11 +360,11 @@ mas ter um tempo de execução razoável para tamanhos grandes de entrada.
         \addlinespace[0.8em]
         I/O e Aloc. Mem. & \multicolumn{2}{c}{Sem} & Com e sem \\
         \addlinespace[0.8em]
-        \textnumero de \textit{Threads} & \multicolumn{2}{c}{$2^0 \dots 2^5$} & -  \\
+        \textnumero{} de \textit{Threads} & \multicolumn{2}{c}{$2^0 \dots 2^5$} & -  \\
         \addlinespace[0.8em]
         Tamanho da Entrada & \multicolumn{3}{c}{$2^4 \dots 2^{13}$}\\
         \addlinespace[0.8em]
-        \textnumero de Execuções & \multicolumn{3}{c}{$10$} \\ \midrule
+        \textnumero{} de Execuções & \multicolumn{3}{c}{$10$} \\ \midrule
         \end{tabular}
     \caption{Experimentos}
     \label{tab:exp}
@@ -415,15 +416,135 @@ A entrega deve ser feita \textbf{até dia xx/xx}.
 
 \section{Tecnologias}
 
+Esta seção descreve brevemente algumas tecnologias usadas no EP1.  O monitor
+estará disponível na \textbf{Sala 00 às Quintas}, das \textbf{10h às 11h30},
+para tirar dúvidas do EP1.
+
 \subsection{Google Compute Engine (GCE)}
+
+O grupo deve possuir uma conta no Google e se cadastrar na Google Compute
+Engine. Será necessário fornecer um cartão de crédito, mas não se preocupem,
+pois a GCE não cobrará nada automaticamente, nem mesmo ao fim do ano gratuito.
+
+Com a conta vocês terão acesso a US\$300 que poderão usar por um ano. Isso é
+\textbf{muito mais do que suficiente} para este EP e pra vocês brincarem à
+vontade durante um ano.
+
+Vocês devem criar uma instância do tipo \texttt{n1-standard-8}, que tem 8
+\textit{cores} e 30 GB de memória, usando a imagem que o monitor vai
+compartilhar com o e-mail que vocês forneceram no registro do Grupo.
 
 \subsection{Shell scripting \& GNU \texttt{screen}}
 
+Para usar a máquina virtual vocês vão precisar usar um emulador do
+\textit{shell} do Linux, como o \texttt{bash}.  O arquivo
+\texttt{run\_measurements.sh} contém o necessário para gerar as medições de tempo
+de execução das três versões do programa, mas vocês vão precisar modificá-lo
+para medir o impacto das operações de I/O e alocações de memória.
+
+Para deixar o \textit{script} rodando na sua instância da GCE, faça o seguinte:
+
+\begin{lstlisting}
+$ screen
+$ ./run_measurements.sh
+<Ctrl+A><D>
+\end{lstlisting}
+
+O comando \texttt{screen} lança uma seção da qual você pode se desconectar sem
+parar a execução de um comando. A sequência \texttt{<Ctrl+A>} seguida de
+\texttt{<D>} desconectará você da sessão. Para voltar, basta executar:
+
+\begin{lstlisting}
+$ screen -r
+\end{lstlisting}
+%$
+
 \subsection{Linux \texttt{perf}}
+
+Um dos comandos executados por \texttt{run\_measurements.sh}, expandindo as
+variáveis, é:
+
+\begin{lstlisting}
+$ perf stat -r 10 ./mandelbrot_seq -2.5 1.5 -2.0 2.0 512
+\end{lstlisting}
+%$
+
+O comando acima executa dez repetições da versão sequencial do programa,
+calculando a imagem inteira do Conjunto de Mandelbrot com um tamanho de imagem
+de $512$ \textit{pixels}. Modificar os parâmetros desse comando será suficiente
+para realizar os experimentos do EP1.
 
 \subsection{\LaTeX}
 
-\section{Conclusão}
+Instalem o \LaTeX{} na máquina que vão usar para escrever o relatório e usem o
+arquivo \texttt{enunciado\_ep1.tex} e o \texttt{Makefile} no repositório do EP1
+como modelo.
+
+\section{Critério de Avaliação}
+
+A nota do EP1 vai de \textbf{0.0} a \textbf{10.0}, e a avaliação será feita da
+maneira descrita a seguir, se os alunos concordarem.
+
+\subsection{Apresentação e Análise de Medições para o Programa Sequencial}
+
+Vale \textbf{2.0}, divididos da seguinte maneira:
+
+\begin{itemize}
+    \item Relatório: \textbf{2.0}
+    \begin{itemize}
+        \item Apresentação e Análise para o Tempo de Execução: \textbf{0.9}
+        \item Apresentação e Análise para o Tempo de Execução sem I/O e sem memória: \textbf{0.9}
+        \item Clareza do texto e figuras: \textbf{0.2}
+    \end{itemize}
+\end{itemize}
+
+\subsection{Apresentação e Análise de Medições para o Programa em Pthreads}
+
+Vale \textbf{4.0}, divididos da seguinte maneira:
+
+\begin{itemize}
+    \item Implementação: \textbf{2.0}
+    \begin{itemize}
+        \item Código compila sem erros e warnings: \textbf{0.9}
+        \item Código executa sem erros e produz o resultado correto: \textbf{0.9}
+        \item Boas práticas de programação e clareza do código: \textbf{0.2}
+    \end{itemize}
+    \item Relatório: \textbf{2.0}
+    \begin{itemize}
+        \item Apresentação e Análise para o Tempo de Execução: \textbf{0.9}
+        \item Apresentação e Análise para o Tempo de Execução sem I/O e sem memória: \textbf{0.9}
+        \item Clareza do texto e figuras: \textbf{0.2}
+    \end{itemize}
+\end{itemize}
+
+\subsection{Apresentação e Análise de Medições para o Programa em OpenMP}
+
+Vale \textbf{4.0}, divididos da seguinte maneira:
+
+\begin{itemize}
+    \item Implementação: \textbf{2.0}
+    \begin{itemize}
+        \item Código compila sem erros e warnings: \textbf{0.9}
+        \item Código executa sem erros e produz o resultado correto: \textbf{0.9}
+        \item Boas práticas de programação e clareza do código: \textbf{0.2}
+    \end{itemize}
+    \item Relatório: \textbf{2.0}
+    \begin{itemize}
+        \item Apresentação e Análise para o Tempo de Execução: \textbf{0.9}
+        \item Apresentação e Análise para o Tempo de Execução sem I/O e sem memória: \textbf{0.9}
+        \item Clareza do texto e figuras: \textbf{0.2}
+    \end{itemize}
+\end{itemize}
+
+O monitor estará disponível na \textbf{Sala 00 às Quintas}, das \textbf{10h às
+11h30}, para tirar dúvidas do EP1.  Bom EP!
+
+\begin{figure}[htpb]
+    \centering
+    \includegraphics[width=\textwidth]{elephant}
+    \caption{Elephant Valley}
+\end{figure}
+
 
 %% References
 %%
