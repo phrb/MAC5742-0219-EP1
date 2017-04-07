@@ -37,7 +37,7 @@ int colors[17][3] = {
                         {204, 128, 0},
                         {153, 87, 0},
                         {106, 52, 3},
-                        {0, 0, 0},
+                        {16, 16, 16},
                     };
 
 void allocate_image_buffer(){
@@ -59,7 +59,7 @@ void init(int argc, char *argv[]){
         printf("    Triple Spiral Valley: ./mandelbrot_pth -0.188 -0.012 0.554 0.754 11500\n");
         exit(0);
     }
-    else {
+    else{
         sscanf(argv[1], "%lf", &c_x_min);
         sscanf(argv[2], "%lf", &c_x_max);
         sscanf(argv[3], "%lf", &c_y_min);
@@ -79,13 +79,11 @@ void update_rgb_buffer(int iteration, int x, int y){
     int color;
 
     if(iteration == iteration_max){
-        color = 16;
-
-        image_buffer[(i_y_max * y) + x][0] = color;
-        image_buffer[(i_y_max * y) + x][1] = color;
-        image_buffer[(i_y_max * y) + x][2] = color;
+        image_buffer[(i_y_max * y) + x][0] = colors[gradient_size][0];
+        image_buffer[(i_y_max * y) + x][1] = colors[gradient_size][0];
+        image_buffer[(i_y_max * y) + x][2] = colors[gradient_size][0];
     }
-    else {
+    else{
         color = iteration % gradient_size;
 
         image_buffer[(i_y_max * y) + x][0] = colors[color][0];
@@ -130,7 +128,7 @@ void compute_mandelbrot(){
     for(i_y = 0; i_y < i_y_max; i_y++){
         c_y = c_y_min + i_y * pixel_height;
 
-        if (fabs(c_y) < pixel_height / 2){
+        if(fabs(c_y) < pixel_height / 2){
             c_y = 0.0;
         };
 
