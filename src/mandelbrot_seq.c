@@ -80,8 +80,8 @@ void update_rgb_buffer(int iteration, int x, int y){
 
     if(iteration == iteration_max){
         image_buffer[(i_y_max * y) + x][0] = colors[gradient_size][0];
-        image_buffer[(i_y_max * y) + x][1] = colors[gradient_size][0];
-        image_buffer[(i_y_max * y) + x][2] = colors[gradient_size][0];
+        image_buffer[(i_y_max * y) + x][1] = colors[gradient_size][1];
+        image_buffer[(i_y_max * y) + x][2] = colors[gradient_size][2];
     }
     else{
         color = iteration % gradient_size;
