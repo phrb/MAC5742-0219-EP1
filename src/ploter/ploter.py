@@ -4,6 +4,7 @@ import numpy as np
 import math
 import fileinput
 import sys
+import os
 
 def main():
 
@@ -11,7 +12,7 @@ def main():
     x, y, stdev, e = [], [], [], []
 
     infile = fileinput.input()
-    title  = next(infile)
+    title  = next(infile).replace('\n', '') # Title in the FIRST LINE
 
     for line in infile:
         line = line.split('\t')
@@ -30,7 +31,7 @@ def main():
     plt.xlabel('log N')
     plt.ylabel('log Time  [s] - AVG of 10 runs')
     plt.title(title)
-    plt.show()
+    plt.savefig(os.environ['EP1219'] + '/ploter/pictures/' + title + '.png')
 
 if __name__ == '__main__':
   main()
