@@ -14,9 +14,6 @@ def main():
     title  = next(infile)
 
     for line in infile:
-        line = line.replace(',', '.')
-        line = line.replace('%', '/100')
-        line = line.replace('\n', '')
         line = line.split('\t')
         y.append(float(line[0]))
         stdev.append(float(eval(line[1])))
