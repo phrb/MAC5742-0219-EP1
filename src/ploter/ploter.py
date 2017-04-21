@@ -8,7 +8,7 @@ import os
 
 def main():
 
-    i = 4
+    power = 4
     x, y, stdev, e = [], [], [], []
 
     infile = fileinput.input()
@@ -18,8 +18,8 @@ def main():
         line = line.split('\t')
         y.append(float(line[0]))
         stdev.append(float(eval(line[1])))
-        x.append(2**i)
-        i += 1
+        x.append(2**power)
+        power += 1
 
     x = map(math.log, x)
     y = map(math.log, y)
