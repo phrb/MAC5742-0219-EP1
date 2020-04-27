@@ -39,6 +39,7 @@
 %% The amsthm package provides extended theorem environments
 %% \usepackage{amsthm}
 
+\usepackage[margin=2cm]{geometry}
 \usepackage{booktabs}
 \usepackage{xcolor}
 \usepackage{sourcecodepro}
@@ -50,7 +51,7 @@
 \usepackage{textcomp}
 \usepackage{caption}
 
-\definecolor{Accent}{HTML}{157FFF}
+\definecolor{Accent}{HTML}{bb0300}
 
 \lstdefinestyle{customMtheme}{%
   backgroundcolor={},
@@ -173,7 +174,7 @@
 %% \address[label1]{<address>}
 %% \address[label2]{<address>}
 
-\author{Pedro Bruel e Alfredo Goldman}
+\author{Pedro Bruel, Anderson Andrei, e Alfredo Goldman}
 
 \address{MAC 5742-0219 Introdução à Programação Concorrente, Paralela e Distribuída}
 
@@ -211,19 +212,19 @@
 
 Você já ouviu falar do Conjunto de
 Mandelbrot\footnote{\url{https://en.wikipedia.org/wiki/Mandelbrot_set}
-[Acessado em 30/03/2017]}?  Seu descobridor foi Benoit Mandelbrot, que
+[Acessado em 24/04/2020]}?  Seu descobridor foi Benoit Mandelbrot, que
 trabalhava na IBM durante a década de 1960 e foi um dos primeiros a usar
 computação gráfica para mostrar como complexidade pode surgir a partir de
 regras simples. Benoit fez isso gerando e visualizando imagens de geometria
 fractal.
 
-Um desses fractais foi nomeado \textit{Conjunto de Mandelbrot} pelo matemático
-Adrien Douady.  O Conjunto de Mandelbrot pode ser informalmente definido como o
-conjunto dos números complexos $c$ para os quais a função $f_c(z) = z^2 + x$
-não diverge quando é iterada começando em $z = 0$. Isto é, a sequência $f_c(0),
-f_c(f_c(0)), f_c(f_c(f_c(0))),\dots$ é sempre limitada. A Figura
-\ref{fig:header} mostra uma região do Conjunto de Mandelbrot conhecida
-como \textit{Seahorse Valley}.
+Um desses fractais  foi nomeado \textit{Conjunto de  Mandelbrot} pelo matemático
+Adrien Douady.  O Conjunto de Mandelbrot  pode ser informalmente definido como o
+conjunto dos números complexos $c$ para os quais a função $f_c(z) = z^2 + x$ não
+diverge quando  é iterada  começando em $z  = 0$. Isto  é, a  sequência $f_c(0),
+f_c(f_c(0)),    f_c(f_c(f_c(0))),\dots$   é    sempre    limitada.   A    Figura
+\ref{fig:header}  mostra uma  região do  Conjunto de  Mandelbrot conhecida  como
+\textit{Seahorse Valley}.
 
 \begin{figure}[htpb]
     \centering
@@ -238,7 +239,7 @@ código fonte fornecido junto com este documento. O código na linguagem
 \texttt{C} e os arquivos em \LaTeX{} necessários para gerar este documento
 estão disponíveis no
 \textit{GitHub}\footnote{\url{https://github.com/phrb/MAC5742-0219-EP1}
-[Acessado em 30/03/2017]}. O resto deste documento descreve as tarefas que você
+[Acessado em 27/04/2020]}. O resto deste documento descreve as tarefas que você
 e seu grupo deverão realizar no EP1.
 
 \section{Tarefas}
@@ -251,10 +252,11 @@ medir o tempo de execução para diferentes tamanhos de entrada e números de
 \textit{threads} nas versões paralelizadas, em quatro regiões do Conjunto
 de Mandelbrot.
 
-A implementação necessária para paralelizar o código fornecido usando Pthreads
-e OpenMP é relativamente simples. A parte mais trabalhosa do EP1 é a elaboração
-de um relatório, seguindo o padrão deste documento, que apresente e discuta de
-forma científica os resultados que vocês obtiverem com as paralelizações.
+A implementação necessária para paralelizar o código fornecido usando Pthreads e
+OpenMP é relativamente simples. A parte mais trabalhosa do EP1 é a elaboração de
+um relatório, no formato \textit{Jupyter Notebook} usando a linguagem Julia, que
+apresente gráficos com os resultados obtidos com as paralelizações, e os discuta
+de forma metódica, como vocês fizeram nos miniEPs.
 
 \subsection{Paralelização com Pthreads e OpenMP}
 
@@ -267,37 +269,35 @@ tem um propósito diferente:
     \item \texttt{mandelbrot\_pth.c}: deve ser paralelizado com Pthreads
 \end{itemize}
 
-Vocês podem modificar à vontade os arquivos \texttt{mandelbrot\_omp.c} e
-\texttt{mandelbrot\_pth.c}, desde que eles continuem produzindo a mesma saída
-produzida por \texttt{mandelbrot\_seq.c}.
+Vocês  podem  modificar  à  vontade  os  arquivos  \texttt{mandelbrot\_omp.c}  e
+\texttt{mandelbrot\_pth.c}, desde  que eles  continuem produzindo a  mesma saída
+produzida por \texttt{mandelbrot\_seq.c}. Vocês também podem modificar o arquivo
+sequencial, dado que a saída continue correta.
 
 \subsection{Experimentos}
 
-Para cada uma das três versões do programa, vocês deverão realizar medições do
-tempo de execução para diferentes tamanhos de entrada. Nas versões
-paralelizadas vocês deverão também medir, para cada tamanho de entrada, o tempo
-de execução para diferentes números de \textit{threads}. Preferencialmente os
-experimentos deverão ser realizados na Google Compute Engine (GCE), usando os
-US\$300 ``de brinde'' que o serviço fornece por um ano. O tipo de instância que
-vocês devem usar é o \texttt{n1-standard-8}, que tem 8 \textit{cores} e 30 GB
-de memória.
+Para cada uma  das três versões do programa, vocês  deverão realizar medições do
+tempo de execução para diferentes tamanhos de entrada. Nas versões paralelizadas
+vocês deverão  também medir, para cada  tamanho de entrada, o  tempo de execução
+para diferentes números de \textit{threads}.
 
-Vocês devem fazer um número de medições e analisar a variação dos valores
-obtidos.  Sugerimos $10$ medições para cada experimento, e também que vocês
-usem a média e o desvio padrão das $10$ medições nos seus gráficos. Vocês podem
-fazer mais medições, desde que apresentem a média e o desvio padrão.
-\textbf{Não é recomendado} fazer menos de $10$ medições.
+Vocês  devem fazer  um número  de  medições e  analisar a  variação dos  valores
+obtidos.  Sugerimos $10$ medições para cada experimento, e também que vocês usem
+a média e  o intervalo de confiança  das $10$ medições nos  seus gráficos. Vocês
+podem  fazer mais  medições,  desde que  apresentem  a média  e  o intervalo  de
+confiança.  \textbf{Não é recomendado} fazer menos de $10$ medições.
 
-Vocês devem analisar também o impacto das porções não paralelizáveis do
-código sequencial: as operações de I/O e alocação de memória. As versões
-paralelizadas \textbf{não precisam} realizar I/O e alocação de memória.
+Vocês devem analisar  também o impacto das porções não  paralelizáveis do código
+sequencial:  as operações  de  I/O e  alocação  de memória.   Uma  vez que  você
+verifique  que  as versões  paralelizadas  produzem  o resultado  correto,  elas
+\textbf{não  precisam}  realizar  I/O  e  alocação  de  memória  nos  testes  de
+desempenho, pois esses custos são fixos e assim aceleramos os experimentos.
 
-A Tabela \ref{tab:exp} lista os experimentos que devem ser feitos: os valores
-para o número de \textit{threads} e de execuções, e os tamanhos de entrada.
-Cada experimento deverá ser repetido nas quatro
-regiões\footnote{\url{http://www.nahee.com/Derbyshire/manguide.html} [Acessado
-em 30/03/2017]} especificadas na Figura~\ref{fig:regions}. As coordenadas para
-cada região podem ser obtidas executando no diretório \texttt{src}:
+A Tabela  \ref{tab:exp} lista os experimentos  que devem ser feitos:  os valores
+para o  número de  \textit{threads} e  de execuções, e  os tamanhos  de entrada.
+Cada  experimento  deverá  ser  repetido nas  quatro  regiões  especificadas  na
+Figura~\ref{fig:regions}.  As coordenadas  para  cada região  podem ser  obtidas
+executando no diretório \texttt{src}:
 
 \begin{lstlisting}
 $ make mandelbrot_seq
@@ -312,7 +312,7 @@ examples with image_size = 11500:
 \end{lstlisting}
 
 O número de iterações para o critério de convergência foi
-escolhido\footnote{\url{https://goo.gl/WpL9hS} [Acessado em 30/03/2017]} de
+escolhido\footnote{\url{https://goo.gl/WpL9hS} [Acessado em 27/04/2020]} de
 forma a produzir uma imagem interessante em diferentes níveis de magnificação,
 mas ter um tempo de execução razoável para tamanhos grandes de entrada.
 
@@ -372,18 +372,19 @@ mas ter um tempo de execução razoável para tamanhos grandes de entrada.
 
 \subsection{Apresentação dos Resultados}
 
-Depois de realizar os experimentos vocês deverão elaborar gráficos que
-evidenciem o comportamento das três versões do programa com relação à variação
-dos parâmetros descritos na Tabela \ref{tab:exp}. Os gráficos deverão ser
-claros e legíveis, com eixos nomeados. Deverão apresentar a média e o desvio
-padrão das $10$ execuções para cada cenário experimental.
+Depois  de  realizar  os  experimentos   vocês  deverão  elaborar  gráficos  que
+evidenciem o comportamento  das três versões do programa com  relação à variação
+dos parâmetros descritos na Tabela \ref{tab:exp}. Os gráficos deverão ser claros
+e legíveis,  com eixos  nomeados. Deverão  apresentar a média  e o  intervalo de
+confiança das $10$ execuções para cada cenário experimental.
 
-Recomendamos que vocês usem ferramentas como a biblioteca \texttt{matplotlib}
-da linguagem \texttt{Python}. Se fizerem isso vocês conseguirão automatizar a
-realização dos experimentos e a geração dos gráficos. A automatização dos
-experimentos e da visualização dos dados gerados é fundamental para pesquisa em
-Ciência da Computação, pois permite gerar e analisar grandes conjuntos de dados
-sem muito esforço manual.
+Neste EP,  você e  seu grupo  deverão utilizar Notebooks  Jupyter e  a linguagem
+Julia  para gerar  os gráficos  e  produzir um  documento com  as análises.   Os
+experimentos podem ser automatizados com a ferramenta \textit{screen}, ou feitos
+a  partir do  Notebook, como  nos  miniEPs. A  automação dos  experimentos e  da
+visualização  dos dados  gerados é  fundamental para  a pesquisa  em Ciência  da
+Computação, pois permite  gerar e analisar grandes conjuntos de  dados sem muito
+esforço manual.
 
 \subsection{Discussão dos Resultados}
 
@@ -391,10 +392,6 @@ Vocês deverão analisar os resultados obtidos e tentar responder a algumas
 perguntas:
 
 \begin{itemize}
-    \item Por que você acha que fizemos a recomendação de se realizar
-    mais de uma medição?
-    \item Por que você acha que existe variabilidade entre execuções do mesmo
-    programa?
     \item Como e por que as três versões do programa se comportam com a variação:
         \begin{itemize}
             \item Do tamanho da entrada?
@@ -409,31 +406,13 @@ Vocês conseguem pensar em mais perguntas interessantes?
 
 \subsection{Entrega no PACA}
 
-Vocês deverão entregar no PACA \textbf{apenas um relatório e código fonte por
-grupo}. A entrega deve ser um único arquivo nos formatos \texttt{.tar},
-\texttt{.zip}, ou qualquer formato que o \texttt{tar} consiga descompactar.
-A entrega deve ser feita \textbf{até dia 25/04/17}.
+Vocês  deverão entregar  no  PACA \textbf{apenas  um  arquivo \texttt{.ipynb}  e
+  código  fonte por  grupo}.  A  entrega deve  ser um  único arquivo  no formato
+\texttt{.tar}.  A entrega deve ser feita até o \textbf{dia 20/05/20}.
 
 \section{Tecnologias}
 
-Esta seção descreve brevemente algumas tecnologias usadas no EP1.  O monitor
-estará disponível na \textbf{Sala 120} para tirar dúvidas do EP1,
-envie um e-mail para \texttt{pedro.bruel@gmail.com} para
-marcar um horário.
-
-\subsection{Google Compute Engine (GCE)}
-
-O grupo deve possuir uma conta no Google e se cadastrar na Google Compute
-Engine. Será necessário fornecer um cartão de crédito, mas não se preocupem,
-pois a GCE não cobrará nada automaticamente, nem mesmo ao fim do ano gratuito.
-
-Com a conta vocês terão acesso a US\$300 que poderão usar por um ano. Isso é
-\textbf{muito mais do que suficiente} para este EP e pra vocês brincarem à
-vontade durante um ano.
-
-Vocês devem criar uma instância do tipo \texttt{n1-standard-8}, que tem 8
-\textit{cores} e 30 GB de memória, usando a imagem que o monitor vai
-compartilhar com o e-mail que vocês forneceram no registro do Grupo.
+Esta seção descreve brevemente algumas  tecnologias usadas no EP1.
 
 \subsection{Shell scripting \& GNU \texttt{screen}}
 
@@ -443,7 +422,7 @@ Para usar a máquina virtual vocês vão precisar usar um emulador do
 de execução das três versões do programa, mas vocês vão precisar modificá-lo
 para medir o impacto das operações de I/O e alocações de memória.
 
-Para deixar o \textit{script} rodando na sua instância da GCE, faça o seguinte:
+Para deixar o \textit{script} rodando na sua máquina, faça o seguinte:
 
 \begin{lstlisting}
 $ screen
@@ -475,16 +454,10 @@ calculando a imagem inteira do Conjunto de Mandelbrot com um tamanho de imagem
 de $512$ \textit{pixels}. Modificar os parâmetros desse comando será suficiente
 para realizar os experimentos do EP1.
 
-\subsection{\LaTeX}
-
-Instalem o \LaTeX{} na máquina que vão usar para escrever o relatório e usem o
-arquivo \texttt{enunciado\_ep1.tex} e o \texttt{Makefile} no repositório do EP1
-como modelo.
-
 \section{Critério de Avaliação}
 
 A nota do EP1 vai de \textbf{0.0} a \textbf{10.0}, e a avaliação será feita da
-maneira descrita a seguir, se os alunos concordarem.
+maneira descrita a seguir.
 
 \subsection{Apresentação e Análise de Medições para o Programa Sequencial}
 
@@ -534,9 +507,9 @@ Vale \textbf{4.0}, divididos da seguinte maneira:
     \end{itemize}
 \end{itemize}
 
-O monitor estará disponível na \textbf{Sala 120} para tirar dúvidas do EP1,
-envie um e-mail para \texttt{pedro.bruel@gmail.com} para marcar um horário.
-Bom EP!
+Se tiver dúvidas,  envie uma mensagem no  fórum do curso, ou  envie e-mails para
+\texttt{pedro.bruel@gmail.com},     \texttt{anderson.andrei.silva@usp.br},    ou
+\texttt{gold@ime.usp.br}.  Bom EP!
 
 %% References
 %%
