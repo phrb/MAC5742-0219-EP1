@@ -46,8 +46,8 @@ void allocate_image_buffer(){
 
     for(int i = 0; i < image_buffer_size; i++){
         image_buffer[i] = (unsigned char *) malloc(sizeof(unsigned char) * rgb_size);
-    };
-};
+    }
+}
 
 void init(int argc, char *argv[]){
     if(argc < 6){
@@ -72,8 +72,8 @@ void init(int argc, char *argv[]){
 
         pixel_width       = (c_x_max - c_x_min) / i_x_max;
         pixel_height      = (c_y_max - c_y_min) / i_y_max;
-    };
-};
+    }
+}
 
 void update_rgb_buffer(int iteration, int x, int y){
     int color;
@@ -89,8 +89,8 @@ void update_rgb_buffer(int iteration, int x, int y){
         image_buffer[(i_y_max * y) + x][0] = colors[color][0];
         image_buffer[(i_y_max * y) + x][1] = colors[color][1];
         image_buffer[(i_y_max * y) + x][2] = colors[color][2];
-    };
-};
+    }
+}
 
 void write_to_file(){
     FILE * file;
@@ -106,10 +106,10 @@ void write_to_file(){
 
     for(int i = 0; i < image_buffer_size; i++){
         fwrite(image_buffer[i], 1 , 3, file);
-    };
+    }
 
     fclose(file);
-};
+}
 
 void compute_mandelbrot(){
     double z_x;
@@ -130,8 +130,9 @@ void compute_mandelbrot(){
 
         if(fabs(c_y) < pixel_height / 2){
             c_y = 0.0;
-        };
+        }
 
+        #pragma omp parallel for schedule(dynamic) default(shared) private(iteration, i_x, c_x, z_x, z_y, z_x_squared, z_y_squared)
         for(i_x = 0; i_x < i_x_max; i_x++){
             c_x         = c_x_min + i_x * pixel_width;
 
@@ -150,12 +151,12 @@ void compute_mandelbrot(){
 
                 z_x_squared = z_x * z_x;
                 z_y_squared = z_y * z_y;
-            };
+            }
 
             update_rgb_buffer(iteration, i_x, i_y);
-        };
-    };
-};
+        }
+    }
+}
 
 int main(int argc, char *argv[]){
     init(argc, argv);
@@ -167,4 +168,4 @@ int main(int argc, char *argv[]){
     write_to_file();
 
     return 0;
-};
+}

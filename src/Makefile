@@ -3,7 +3,7 @@ OUTPUT=mandelbrot
 IMAGE=.ppm
 
 CC=gcc
-CC_OPT=-std=c11
+CC_OPT=-std=c11 --pedantic -Wall
 
 CC_OMP=-fopenmp
 CC_PTH=-pthread
@@ -22,4 +22,4 @@ $(OUTPUT)_seq: $(OUTPUT)_seq.c
 
 .PHONY: clean
 clean:
-	rm $(OUTPUT)_omp $(OUTPUT)_pth $(OUTPUT)_seq *$(IMAGE)
+	rm -f $(OUTPUT)_omp $(OUTPUT)_pth $(OUTPUT)_seq *$(IMAGE)

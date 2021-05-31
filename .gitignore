@@ -1,15 +1,14 @@
 *.swp
 *.ppm
 
-mandelbrot_seq
-mandelbrot_pth
-mandelbrot_omp
+src/mandelbrot_seq
+src/mandelbrot_pth
+src/mandelbrot_omp
 
 measurements/
 
 *.aux
 *.bbl
 *.blg
-*.log
 *.pdf
 *.spl
