@@ -2,7 +2,6 @@
 #include <stdlib.h>
 #include <math.h>
 #include <pthread.h>
-#define MAX_THREADS 32
 
 double c_x_min;
 double c_x_max;
@@ -20,6 +19,8 @@ unsigned char **image_buffer;
 int i_x_max;
 int i_y_max;
 int image_buffer_size;
+
+int num_threads;
 
 int gradient_size = 16;
 int colors[17][3] = {
@@ -57,12 +58,12 @@ void init(int argc, char *argv[])
 {
     if (argc < 6)
     {
-        printf("usage: ./mandelbrot_pth c_x_min c_x_max c_y_min c_y_max image_size\n");
+        printf("usage: ./mandelbrot_pth c_x_min c_x_max c_y_min c_y_max image_size num_threads\n");
         printf("examples with image_size = 11500:\n");
-        printf("    Full Picture:         ./mandelbrot_pth -2.5 1.5 -2.0 2.0 11500\n");
-        printf("    Seahorse Valley:      ./mandelbrot_pth -0.8 -0.7 0.05 0.15 11500\n");
-        printf("    Elephant Valley:      ./mandelbrot_pth 0.175 0.375 -0.1 0.1 11500\n");
-        printf("    Triple Spiral Valley: ./mandelbrot_pth -0.188 -0.012 0.554 0.754 11500\n");
+        printf("    Full Picture:         ./mandelbrot_pth -2.5 1.5 -2.0 2.0 11500 32\n");
+        printf("    Seahorse Valley:      ./mandelbrot_pth -0.8 -0.7 0.05 0.15 11500 64\n");
+        printf("    Elephant Valley:      ./mandelbrot_pth 0.175 0.375 -0.1 0.1 11500 128\n");
+        printf("    Triple Spiral Valley: ./mandelbrot_pth -0.188 -0.012 0.554 0.754 11500 256\n");
         exit(0);
     }
     else
@@ -72,6 +73,10 @@ void init(int argc, char *argv[])
         sscanf(argv[3], "%lf", &c_y_min);
         sscanf(argv[4], "%lf", &c_y_max);
         sscanf(argv[5], "%d", &image_size);
+        if (argc >= 7)
+            sscanf(argv[6], "%d", &num_threads);
+        else
+            num_threads = 32;
 
         i_x_max = image_size;
         i_y_max = image_size;
@@ -185,28 +190,27 @@ void *thread_routine(void *arg)
 
 void compute_mandelbrot()
 {
-
-    pthread_t threads[MAX_THREADS];
-    struct thread_data thread_data_array[MAX_THREADS];
+    pthread_t threads[num_threads];
+    struct thread_data thread_data_array[num_threads];
     int i, marker = 0;
 
-    for (i = 0; i < image_size % MAX_THREADS - 1; i++)
+    for (i = 0; i < image_size % num_threads; i++)
     {
         thread_data_array[i].start = marker;
-        marker += image_size / MAX_THREADS + 1;
+        marker += image_size / num_threads + 1;
         thread_data_array[i].end = marker;
         pthread_create(&threads[i], NULL, thread_routine, (void *)&thread_data_array[i]);
     }
 
-    for (; i < MAX_THREADS; i++)
+    for (; i < num_threads; i++)
     {
         thread_data_array[i].start = marker;
-        marker += image_size / MAX_THREADS;
+        marker += image_size / num_threads;
         thread_data_array[i].end = marker;
         pthread_create(&threads[i], NULL, thread_routine, (void *)&thread_data_array[i]);
     }
 
-    for (i = 0; i < MAX_THREADS; i++)
+    for (i = 0; i < num_threads; i++)
     {
         pthread_join(threads[i], NULL);
     }
