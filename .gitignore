@@ -7,6 +7,10 @@ src/mandelbrot_omp
 
 measurements/
 
+.DS_store
+.*.swp
+.exrc
+
 *.aux
 *.bbl
 *.blg
