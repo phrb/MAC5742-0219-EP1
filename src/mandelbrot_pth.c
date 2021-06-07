@@ -188,18 +188,25 @@ void compute_mandelbrot()
 
     pthread_t threads[MAX_THREADS];
     struct thread_data thread_data_array[MAX_THREADS];
-    int t = 0, marker = 0;
+    int i, marker = 0;
 
-    for (int i = 0; i < MAX_THREADS; i++)
+    for (i = 0; i < image_size % MAX_THREADS - 1; i++)
     {
         thread_data_array[i].start = marker;
-        thread_data_array[i].end = marker + image_size / MAX_THREADS;
+        marker += image_size / MAX_THREADS + 1;
+        thread_data_array[i].end = marker;
         pthread_create(&threads[i], NULL, thread_routine, (void *)&thread_data_array[i]);
-        t++;
-        marker += image_size / MAX_THREADS;
     }
 
-    for (int i = 0; i < MAX_THREADS; i++)
+    for (; i < MAX_THREADS; i++)
+    {
+        thread_data_array[i].start = marker;
+        marker += image_size / MAX_THREADS;
+        thread_data_array[i].end = marker;
+        pthread_create(&threads[i], NULL, thread_routine, (void *)&thread_data_array[i]);
+    }
+
+    for (i = 0; i < MAX_THREADS; i++)
     {
         pthread_join(threads[i], NULL);
     }
