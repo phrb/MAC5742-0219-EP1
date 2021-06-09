@@ -19,6 +19,8 @@ int i_x_max;
 int i_y_max;
 int image_buffer_size;
 
+int num_threads;
+
 int gradient_size = 16;
 int colors[17][3] = {
                         {66, 30, 15},
@@ -51,12 +53,12 @@ void allocate_image_buffer(){
 
 void init(int argc, char *argv[]){
     if(argc < 6){
-        printf("usage: ./mandelbrot_omp c_x_min c_x_max c_y_min c_y_max image_size\n");
+        printf("usage: ./mandelbrot_omp c_x_min c_x_max c_y_min c_y_max image_size num_threads\n");
         printf("examples with image_size = 11500:\n");
-        printf("    Full Picture:         ./mandelbrot_omp -2.5 1.5 -2.0 2.0 11500\n");
-        printf("    Seahorse Valley:      ./mandelbrot_omp -0.8 -0.7 0.05 0.15 11500\n");
-        printf("    Elephant Valley:      ./mandelbrot_omp 0.175 0.375 -0.1 0.1 11500\n");
-        printf("    Triple Spiral Valley: ./mandelbrot_omp -0.188 -0.012 0.554 0.754 11500\n");
+        printf("    Full Picture:         ./mandelbrot_omp -2.5 1.5 -2.0 2.0 11500 32\n");
+        printf("    Seahorse Valley:      ./mandelbrot_omp -0.8 -0.7 0.05 0.15 11500 64\n");
+        printf("    Elephant Valley:      ./mandelbrot_omp 0.175 0.375 -0.1 0.1 11500 128\n");
+        printf("    Triple Spiral Valley: ./mandelbrot_omp -0.188 -0.012 0.554 0.754 11500 256\n");
         exit(0);
     }
     else{
@@ -65,6 +67,10 @@ void init(int argc, char *argv[]){
         sscanf(argv[3], "%lf", &c_y_min);
         sscanf(argv[4], "%lf", &c_y_max);
         sscanf(argv[5], "%d", &image_size);
+        if (argc >= 7)
+            sscanf(argv[6], "%d", &num_threads);
+        else
+            num_threads = 32;
 
         i_x_max           = image_size;
         i_y_max           = image_size;
@@ -132,7 +138,9 @@ void compute_mandelbrot(){
             c_y = 0.0;
         }
 
-        #pragma omp parallel for schedule(dynamic) default(shared) private(iteration, i_x, c_x, z_x, z_y, z_x_squared, z_y_squared)
+        omp_set_dynamic(0);
+
+        #pragma omp parallel for schedule(dynamic) default(shared) private(iteration, i_x, c_x, z_x, z_y, z_x_squared, z_y_squared) num_threads(num_threads)
         for(i_x = 0; i_x < i_x_max; i_x++){
             c_x         = c_x_min + i_x * pixel_width;
 
